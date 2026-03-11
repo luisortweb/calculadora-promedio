@@ -1,265 +1,392 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Promedio</title>
-<meta name="description" content="Calcula tu promedio y la nota que necesitas en el examen final. Herramienta tipo app, gratuita y fácil de usar desde móvil o PC.">
-<meta name="keywords" content="calculadora de promedio, promedio de notas, calculadora GPA, examen final, notas con porcentaje, app para estudiantes">
-<meta name="author" content="Luis">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Calculadora de Promedio de Notas y Examen Final | Herramienta Gratuita</title>
+    <meta name="description" content="Calcula tu promedio de notas ponderado fácilmente y descubre qué calificación necesitas en tu examen final para aprobar. Herramienta gratuita para estudiantes de colegio y universidad.">
+    <meta name="keywords" content="calculadora promedio, promedio notas, calcular promedio escolar, nota examen final, promedio ponderado, estudiantes, universidad">
+    <meta name="author" content="Luis">
+    
+    <meta property="og:title" content="Calculadora de Promedio y Examen Final">
+    <meta property="og:description" content="Calcula tu promedio de notas fácilmente y descubre qué nota necesitas en tu examen final.">
+    <meta property="og:type" content="website">
 
-<!-- Google AdSense Script -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4951348911490127"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4951348911490127" crossorigin="anonymous"></script>
 
-<style>
-body{
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background:#e0f0ff;
-    margin:0;
-    padding:0;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    min-height:100vh;
-}
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #007bff;
+            --bg: #f4f7f6;
+            --text: #333;
+            --light-bg: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
 
-.app-container{
-    width:100%;
-    max-width:500px;
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 8px 30px rgba(0,0,0,0.15);
-}
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
 
-h1,h2{
-    text-align:center;
-    color:#333;
-}
+        nav {
+            margin-top: 15px;
+        }
 
-input{
-    width:80%;
-    padding:10px;
-    margin:6px 0;
-    border-radius:8px;
-    border:1px solid #ccc;
-}
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
 
-button{
-    padding:12px 20px;
-    margin:5px 5px 10px 0;
-    border:none;
-    border-radius:10px;
-    background:#007bff;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
-}
+        nav a:hover {
+            color: #cce5ff;
+        }
 
-button:hover{
-    background:#0056b3;
-}
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            background: var(--light-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
 
-#resultado,#resultadoExamen{
-    text-align:center;
-    margin-top:15px;
-    font-weight:bold;
-    font-size:18px;
-    color:#007bff;
-}
+        h1, h2, h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+        header h1 {
+            color: white;
+            margin-bottom: 10px;
+        }
 
-.note-row{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-bottom:5px;
-}
+        h1 { font-size: 2.2em; text-align: center; }
+        h2 { font-size: 1.5em; border-bottom: 2px solid rgb(239, 235, 233); padding-bottom: 10px; margin-top: 40px;}
 
-.note-row input{
-    width:40%;
-    margin-right:5px;
-}
+        /* Estilos de la calculadora */
+        .calculator-box {
+            background: #eef5fb;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #d7e6f5;
+            margin-bottom: 30px;
+        }
 
-section{
-    margin-top:25px;
-}
+        .note-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
 
-p{
-    line-height:1.5;
-    font-size:14px;
-    color:#333;
-}
+        input {
+            width: 45%;
+            padding: 12px;
+            margin: 5px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
 
-hr{
-    margin:20px 0;
-    border:none;
-    border-top:1px solid #ccc;
-}
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
 
-</style>
+        button {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 6px;
+            background: var(--secondary);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover { background: var(--primary); }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
+
+        .resultado-box {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 20px;
+            display: none;
+        }
+
+        .content-section { margin-top: 40px; }
+        .content-section p { text-align: justify; }
+
+        /* Aviso de cookies */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #343a40;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #cookie-banner button {
+            flex: none;
+            padding: 8px 20px;
+            background: #28a745;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="app-container">
+    <header>
+        <h1>Calculadora de Promedio Escolar y Universitario</h1>
+        <nav>
+            <a href="#calculadora">Calculadora</a>
+            <a href="#como-funciona">¿Cómo funciona?</a>
+            <a href="#faq">Preguntas Frecuentes</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </header>
 
-<h1>Calculadora de Promedio</h1>
-<p>Ingresa tus notas y sus porcentajes (opcional). El promedio se calculará considerando los pesos si se ingresan.</p>
+    <main class="container">
+        
+        <p style="text-align: center; font-size: 1.1em; color: #555;">
+            Controla tu rendimiento académico. Utiliza nuestra herramienta para calcular tu promedio ponderado y descubre exactamente qué calificación necesitas en tu examen final para aprobar la asignatura.
+        </p>
 
-<div id="notas-container">
-    <div class="note-row">
-        <input type="number" class="nota" placeholder="Nota 1">
-        <input type="number" class="peso" placeholder="%">
+        <section id="calculadora" class="calculator-box">
+            <h2>1. Calcula tu Promedio Actual</h2>
+            <p>Ingresa tus calificaciones y el porcentaje (peso) que vale cada una. Si todas valen lo mismo, puedes dejar el campo de porcentaje en blanco.</p>
+            
+            <div id="notas-container">
+                <div class="note-row">
+                    <input type="number" class="nota" placeholder="Calificación 1" min="0" step="0.1">
+                    <input type="number" class="peso" placeholder="Porcentaje (%) ej: 20" min="0" step="1">
+                </div>
+                <div class="note-row">
+                    <input type="number" class="nota" placeholder="Calificación 2" min="0" step="0.1">
+                    <input type="number" class="peso" placeholder="Porcentaje (%) ej: 30" min="0" step="1">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button onclick="agregarNota()">+ Añadir Nota</button>
+                <button class="btn-danger" onclick="borrarNota()">- Quitar Nota</button>
+                <button onclick="calcular()">Calcular Promedio</button>
+            </div>
+
+            <div id="resultado" class="resultado-box"></div>
+        </section>
+
+        <div style="margin: 30px 0; text-align: center;">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-4951348911490127"
+                data-ad-slot="1234567890"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <section class="calculator-box">
+            <h2>2. ¿Cuánto necesitas en el Examen Final?</h2>
+            <p>¿No sabes cuánto necesitas sacar en tu última prueba para pasar la materia? Ingresa tus datos aquí:</p>
+            
+            <input type="number" id="promedioDeseado" placeholder="Nota final que deseas alcanzar (ej: 7.0)">
+            <input type="number" id="promedioActual" placeholder="Tu promedio actual (calculado arriba)">
+            <input type="number" id="pesoExamen" placeholder="Valor del examen final en % (ej: 40)">
+
+            <div class="btn-group">
+                <button onclick="calcularExamen()">Calcular Nota Necesaria</button>
+            </div>
+
+            <div id="resultadoExamen" class="resultado-box"></div>
+        </section>
+
+        <section id="como-funciona" class="content-section">
+            <h2>¿Por qué es importante calcular tu promedio académico?</h2>
+            <p>Conocer tu <strong>promedio de notas</strong> a lo largo del semestre académico es vital para cualquier estudiante, ya sea en el colegio, la preparatoria o la universidad. Mantener un seguimiento de tus calificaciones te permite saber en qué materias debes esforzarte más y en cuáles tienes un margen de seguridad.</p>
+            
+            <h3>La diferencia entre un promedio simple y un promedio ponderado</h3>
+            <p>Nuestra herramienta funciona como una calculadora de <strong>promedio ponderado</strong>. A diferencia del promedio aritmético simple (donde todas las notas valen lo mismo), el promedio ponderado toma en cuenta el "peso" o porcentaje que el profesor le asignó a cada evaluación. Por ejemplo, un trabajo práctico puede valer el 20% de tu nota final, mientras que un examen parcial puede valer el 50%.</p>
+            
+            <h3>Estrategias para mejorar tus calificaciones</h3>
+            <ul>
+                <li><strong>Planificación:</strong> No dejes el estudio para la noche anterior al examen. Revisa tus apuntes diariamente.</li>
+                <li><strong>Conoce el syllabus:</strong> Entiende cómo evalúa tu profesor. Si los trabajos prácticos tienen un gran peso porcentual, asegúrate de entregarlos a tiempo.</li>
+                <li><strong>Usa herramientas:</strong> Utiliza calculadoras como esta para establecer metas reales antes de tus exámenes finales.</li>
+            </ul>
+        </section>
+
+        <section id="faq" class="content-section">
+            <h2>Preguntas Frecuentes (FAQ)</h2>
+            
+            <h3>¿Qué ocurre si no ingreso el porcentaje de las notas?</h3>
+            <p>Si decides no introducir ningún porcentaje en las casillas correspondientes, nuestra calculadora asumirá automáticamente que todas tus evaluaciones tienen el mismo valor. Es decir, realizará un cálculo de promedio simple estándar (sumando todas las notas y dividiéndolas entre la cantidad de notas).</p>
+
+            <h3>¿Mi información queda guardada?</h3>
+            <p>No. Esta herramienta funciona procesando los datos directamente en tu navegador mediante JavaScript. No guardamos tus calificaciones, ni tus datos en ninguna base de datos externa. Tu privacidad está garantizada.</p>
+
+            <h3>¿Funciona para sistemas de calificación del 1 al 10 o del 1 al 100?</h3>
+            <p>Sí, la calculadora es universal. Puedes introducir calificaciones en formato decimal (ejemplo: 4.5, 8.2) o en números enteros (ejemplo: 85, 90). El cálculo matemático se adaptará a los números que proporciones.</p>
+        </section>
+
+        <section id="privacidad" class="content-section">
+            <h2>Políticas de Privacidad y Cookies</h2>
+            <p>Este sitio web utiliza <strong>Google AdSense</strong>, un servicio de publicidad web de Google Inc. Google utiliza cookies (como la cookie de DoubleClick) para publicar anuncios basados en las visitas previas del usuario a este u otros sitios de Internet. El uso de cookies de publicidad permite a Google y a sus socios mostrar anuncios basados en la navegación de los usuarios.</p>
+            <p>Los visitantes pueden inhabilitar la publicidad personalizada visitando la <a href="https://myadcenter.google.com/" target="_blank" rel="nofollow">Configuración de anuncios de Google</a>. No recopilamos información personal identificable como nombres, direcciones o correos electrónicos, a menos que el usuario los proporcione voluntariamente a través del contacto.</p>
+        </section>
+
+        <section id="contacto" class="content-section">
+            <h2>Contacto</h2>
+            <p>Esta plataforma fue desarrollada por Luis con el objetivo de facilitar la vida estudiantil. Si experimentas algún error con la calculadora, tienes sugerencias para nuevas funciones o simplemente deseas ponerte en contacto, puedes escribirme directamente a:</p>
+            <p>📧 <strong>Email:</strong> luisor2306@gmail.com</p>
+        </section>
+
+    </main>
+
+    <div id="cookie-banner">
+        <span>Utilizamos cookies propias y de terceros (Google AdSense) para personalizar el contenido y los anuncios. Al continuar navegando, aceptas nuestra política de privacidad.</span>
+        <button onclick="aceptarCookies()">Aceptar</button>
     </div>
-    <div class="note-row">
-        <input type="number" class="nota" placeholder="Nota 2">
-        <input type="number" class="peso" placeholder="%">
-    </div>
-    <div class="note-row">
-        <input type="number" class="nota" placeholder="Nota 3">
-        <input type="number" class="peso" placeholder="%">
-    </div>
-</div>
 
-<button onclick="agregarNota()">Agregar Nota</button>
-<button onclick="borrarNota()">Borrar Última Nota</button>
-<button onclick="calcular()">Calcular Promedio</button>
+    <footer>
+        <p>© 2026 Calculadora de Promedio Estudiantil | Desarrollado por Luis</p>
+    </footer>
 
-<!-- Anuncio entre calculadora y resultado -->
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-client="ca-pub-4951348911490127"
-     data-ad-slot="1234567890"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    <script>
+        // Lógica del aviso de cookies
+        window.onload = function() {
+            if (!localStorage.getItem("cookiesAceptadas")) {
+                document.getElementById("cookie-banner").style.display = "flex";
+            } else {
+                document.getElementById("cookie-banner").style.display = "none";
+            }
+        };
 
-<h2 id="resultado"></h2>
-
-<hr>
-
-<h2>Calculadora de Examen Final</h2>
-<p>Calcula cuánto necesitas en el examen final para alcanzar un promedio deseado:</p>
-<input type="number" id="promedioDeseado" placeholder="Promedio deseado">
-<input type="number" id="promedioActual" placeholder="Promedio actual">
-<input type="number" id="pesoExamen" placeholder="Peso del examen (%)">
-<button onclick="calcularExamen()">Calcular Nota Necesaria</button>
-<h2 id="resultadoExamen"></h2>
-
-<hr>
-
-<!-- Segundo anuncio antes del historial -->
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-client="ca-pub-4951348911490127"
-     data-ad-slot="9876543210"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-<section>
-<h2>Historial de Resultados</h2>
-<div id="historial"></div>
-</section>
-
-<hr>
-
-<section>
-<h2>Explicación</h2>
-<p>Para calcular el promedio ponderado, cada nota se multiplica por su porcentaje y luego se divide entre la suma de los porcentajes.</p>
-<p>Ejemplo: notas 80, 90 con pesos 40% y 60%:</p>
-<p>(80*0.4 + 90*0.6) = 86</p>
-</section>
-
-<section>
-<h2>Preguntas Frecuentes</h2>
-<p><strong>¿Qué pasa si no pongo porcentaje?</strong></p>
-<p>Si no pones porcentaje, todas las notas cuentan igual.</p>
-<p><strong>¿Cómo se usa la calculadora de examen final?</strong></p>
-<p>Ingresa tu promedio actual, el promedio deseado y el porcentaje del examen. La herramienta te dirá la nota que necesitas.</p>
-</section>
-
-</div>
-
-<script>
-// Añadir nota con porcentaje
-function agregarNota(){
-    let container = document.getElementById("notas-container");
-    let count = container.getElementsByClassName("note-row").length + 1;
-    let row = document.createElement("div");
-    row.className="note-row";
-    row.innerHTML = `<input type="number" class="nota" placeholder="Nota ${count}"><input type="number" class="peso" placeholder="%">`;
-    container.appendChild(row);
-}
-
-// Borrar última nota
-function borrarNota(){
-    let container = document.getElementById("notas-container");
-    let rows = container.getElementsByClassName("note-row");
-    if(rows.length > 1){
-        container.removeChild(rows[rows.length - 1]);
-    } else {
-        alert("Debe quedar al menos una nota");
-    }
-}
-
-// Calcular promedio ponderado
-function calcular(){
-    let notas = document.getElementsByClassName("nota");
-    let pesos = document.getElementsByClassName("peso");
-    let sumaNotas=0;
-    let sumaPesos=0;
-    let totalNotas=0;
-    let textoHistorial="";
-
-    for(let i=0;i<notas.length;i++){
-        let n = parseFloat(notas[i].value);
-        let p = parseFloat(pesos[i].value);
-
-        if(isNaN(n)){
-            document.getElementById("resultado").innerText="Ingresa todas las notas";
-            return;
+        function aceptarCookies() {
+            localStorage.setItem("cookiesAceptadas", "true");
+            document.getElementById("cookie-banner").style.display = "none";
         }
-        if(isNaN(p) || p==0){
-            p=1;
+
+        // Lógica de la calculadora
+        function agregarNota() {
+            let container = document.getElementById("notas-container");
+            let count = container.getElementsByClassName("note-row").length + 1;
+            let row = document.createElement("div");
+            row.className = "note-row";
+            row.innerHTML = `<input type="number" class="nota" placeholder="Calificación ${count}" min="0" step="0.1"><input type="number" class="peso" placeholder="Porcentaje (%)" min="0" step="1">`;
+            container.appendChild(row);
         }
 
-        sumaNotas += n * p;
-        sumaPesos += p;
-        totalNotas++;
-    }
+        function borrarNota() {
+            let container = document.getElementById("notas-container");
+            let rows = container.getElementsByClassName("note-row");
+            if(rows.length > 1){
+                container.removeChild(rows[rows.length - 1]);
+            } else {
+                alert("Debes mantener al menos una casilla de calificación.");
+            }
+        }
 
-    let promedio = sumaNotas / sumaPesos;
-    document.getElementById("resultado").innerText="Tu promedio es: "+promedio.toFixed(2);
+        function calcular() {
+            let notas = document.getElementsByClassName("nota");
+            let pesos = document.getElementsByClassName("peso");
+            let sumaNotas = 0;
+            let sumaPesos = 0;
+            let todasMismoPeso = true;
 
-    // Guardar en historial
-    textoHistorial=`Promedio calculado: ${promedio.toFixed(2)}<br>`;
-    let historialDiv = document.getElementById("historial");
-    historialDiv.innerHTML = textoHistorial + historialDiv.innerHTML;
-}
+            // Revisar si algún peso fue ingresado
+            for(let i=0; i<pesos.length; i++) {
+                if(pesos[i].value !== "") todasMismoPeso = false;
+            }
 
-// Calcular examen final
-function calcularExamen(){
-    let promedioDeseado = parseFloat(document.getElementById("promedioDeseado").value);
-    let promedioActual = parseFloat(document.getElementById("promedioActual").value);
-    let pesoExamen = parseFloat(document.getElementById("pesoExamen").value);
+            for(let i=0; i<notas.length; i++) {
+                let n = parseFloat(notas[i].value);
+                let p = parseFloat(pesos[i].value);
 
-    if(isNaN(promedioDeseado)||isNaN(promedioActual)||isNaN(pesoExamen)){
-        document.getElementById("resultadoExamen").innerText="Ingresa todos los valores";
-        return;
-    }
+                if(isNaN(n)) {
+                    mostrarResultado("resultado", "Por favor, ingresa todas las calificaciones requeridas.", true);
+                    return;
+                }
 
-    let notaNecesaria = ((promedioDeseado - promedioActual*(1-(pesoExamen/100)))/(pesoExamen/100));
-    document.getElementById("resultadoExamen").innerText="Necesitas: " + notaNecesaria.toFixed(2) + " en el examen final";
-}
-</script>
+                if(todasMismoPeso || isNaN(p) || p === 0) { p = 1; }
 
+                sumaNotas += (n * p);
+                sumaPesos += p;
+            }
+
+            let promedio = sumaNotas / sumaPesos;
+            mostrarResultado("resultado", "Tu promedio ponderado es: " + promedio.toFixed(2), false);
+            
+            // Auto-completar el promedio actual en la siguiente calculadora
+            document.getElementById("promedioActual").value = promedio.toFixed(2);
+        }
+
+        function calcularExamen() {
+            let promedioDeseado = parseFloat(document.getElementById("promedioDeseado").value);
+            let promedioActual = parseFloat(document.getElementById("promedioActual").value);
+            let pesoExamen = parseFloat(document.getElementById("pesoExamen").value);
+
+            if(isNaN(promedioDeseado) || isNaN(promedioActual) || isNaN(pesoExamen)) {
+                mostrarResultado("resultadoExamen", "Por favor, ingresa todos los valores numéricos.", true);
+                return;
+            }
+
+            let notaNecesaria = ((promedioDeseado - promedioActual * (1 - (pesoExamen / 100))) / (pesoExamen / 100));
+            mostrarResultado("resultadoExamen", "Necesitas sacar un: " + notaNecesaria.toFixed(2) + " en el examen final.", false);
+        }
+
+        function mostrarResultado(elementId, mensaje, esError) {
+            let el = document.getElementById(elementId);
+            el.innerText = mensaje;
+            el.style.display = "block";
+            el.style.backgroundColor = esError ? "#f8d7da" : "#d4edda";
+            el.style.color = esError ? "#721c24" : "#155724";
+        }
+    </script>
 </body>
 </html>
-
